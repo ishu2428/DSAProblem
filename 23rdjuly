@@ -1,0 +1,74 @@
+//Given a linkedList of 0s 1s and 2s sort it
+//Given a linked list of N nodes where nodes can 
+//contain values 0s, 1s, and 2s only. The task is to segregate 0s, 1s, and 2s
+// linked list such that all zeros segregate to head side, 2s at the end of the
+// linked list, and 1s in the mid of 0s and 2s.
+
+/*
+class Node
+{
+    int data;
+    Node next;
+    Node(int data)
+    {
+        this.data = data;
+        next = null;
+    }
+}
+*/
+class Solution
+{
+    //Function to sort a linked list of 0s, 1s and 2s.
+    static Node segregate(Node head)
+    {
+        int l1=length(head);
+        int store[]=new int[l1];
+        Node temp=head;
+        int k=0;
+        while(temp!=null){
+            store[k++]=temp.data;
+            temp=temp.next;
+        }
+        int one=0;
+        int two=store.length-1;
+        for(int i=0;i<store.length;){
+            if(store[i]==0){
+                int temp1=store[i];
+                store[i]=store[one];
+                store[one]=temp1;
+                one++;
+                i++;
+            }
+            else if(store[i]==2 && i<two){
+                int temp1=store[i];
+                store[i]=store[two];
+                store[two]=temp1;
+                two--;
+            }
+            else{
+                i++;
+            }
+        }
+        Node head1=null,tail=null;
+        for(int i=0;i<store.length;i++){
+            Node n1=new Node(store[i]);
+            if(head1==null){
+                head1=n1;
+                tail=n1;
+            }
+            else{
+                tail.next=n1;
+                tail=n1;
+            }
+        }
+        return head1;
+    }
+    public static int length(Node head){
+        int l1=0;
+        while(head!=null){
+            l1++;
+            head=head.next;
+        }
+        return l1;
+    }
+}
