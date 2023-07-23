@@ -1,0 +1,32 @@
+//Non Repeating Character
+//Given a string S consisting of lowercase
+// Latin Letters. Return the first non-repeating 
+//character in S. If there is no non-repeating character, return '$'.
+//Input:
+S = hello
+Output: h
+Explanation: In the given string, the
+first character which is non-repeating
+is h, as it appears first and there is
+no other 'h' in the string.
+class Solution
+{
+    //Function to find the first non-repeating character in a string.
+    static char nonrepeatingCharacter(String str)
+    {
+        HashMap<Character,Integer>map=new HashMap<>();
+        for(int i=0;i<str.length();i++){
+            if(map.containsKey(str.charAt(i))){
+                map.put(str.charAt(i),map.get(str.charAt(i))+1);
+                continue;
+            }
+            map.put(str.charAt(i),1);
+        }
+        for(int i=0;i<str.length();i++){
+            if(map.get(str.charAt(i))==1){
+                return str.charAt(i);
+            }
+        }
+        return '$';
+    }
+}
