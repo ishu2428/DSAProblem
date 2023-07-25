@@ -37,7 +37,7 @@ class Node
 class Solution{
     //Function to return list containing elements of right view of binary tree.
     ArrayList<Integer> rightView(Node root) {
-        ArrayList<Integer>ans=new ArrayList<>();
+        ArrayList<Integer>ans1=new ArrayList<>();
         Queue<Node>q1=new LinkedList<>();
         q1.add(root);
         q1.add(null);
@@ -48,7 +48,7 @@ class Solution{
                 break;
             }
             if(q1.peek()==null){
-                ans.add(front.data);
+                ans1.add(front.data);
             }
             if(front.left!=null){
                 q1.add(front.left);
@@ -61,6 +61,6 @@ class Solution{
                 q1.add(null);
             }
         }
-        return ans;
+        return ans1;
     }
 }
