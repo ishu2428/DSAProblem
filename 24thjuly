@@ -21,7 +21,7 @@ Input:
 Output: 10 30 60
 code
 /*Complete The Function Provided
-Given Below is The Node Of Tree
+Given Below is The Node Of Tree 
 class Node
 {
     int data;
