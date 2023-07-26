@@ -1,0 +1,15 @@
+//Level order traversal in spiral form
+Given a binary tree and the task is to find the spiral order traversal of the tree.
+
+Spiral order Traversal mean: Starting from 
+level 0 for root node, for all the even 
+levels we print the node's value from right to left and
+ for all the odd levels we print the node's value from left to right. 
+
+Input:
+           10
+         /     \
+        20     30
+      /    \
+    40     60
+Output: 10 20 30 60 40
