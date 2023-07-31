@@ -24,3 +24,30 @@ Output: 5
 Explanation:Inorder of Given BST will be:
 1, 3, 4, 6, 7, 8. So, here median will
 (4 + 6)/2 = 10/2 = 5.
+
+code
+class Tree
+{
+    public static float findMedian(Node root)
+    {
+        ArrayList<Integer>temp=new ArrayList<>();
+        inLevel(root,temp);
+        if(temp.size()%2==0){
+            int mid=temp.size()/2;
+            float ans=(temp.get(mid)+temp.get(mid-1))/2.0f;
+            return ans;
+        }
+        else{
+            int mid=temp.size()/2;
+            return (float)(temp.get(mid));
+        }
+    }
+    public static void inLevel(Node root,ArrayList<Integer>temp){
+        if(root==null){
+            return;
+        }
+        inLevel(root.left,temp);
+        temp.add(root.data);
+        inLevel(root.right,temp);
+    }
+}
