@@ -1,0 +1,80 @@
+Shortest Source to Destination Path
+
+Given a 2D binary matrix A(0-based index) of dimensions NxM. Find the minimum number of steps 
+required to reach from (0,0) to (X, Y).
+Note: You can only move left, right, up and down, and only 
+through cells that contain 1.
+Input:
+N=3, M=4
+A=[[1,0,0,0], 
+   [1,1,0,1],
+   [0,1,1,1]]
+X=2, Y=3 
+Output:
+5
+Explanation:
+The shortest path is as follows:
+(0,0)->(1,0)->(1,1)->(2,1)->(2,2)->(2,3).
+
+Input:
+N=3, M=4
+A=[[1,1,1,1],
+   [0,0,0,1],
+   [0,0,0,1]]
+X=0, Y=3
+Output:
+3
+Explanation:
+The shortest path is as follows:
+(0,0)->(0,1)->(0,2)->(0,3).
+
+code
+class Pair{
+    int i;
+    int j;
+    int d;
+    public Pair(int i,int j,int d){
+        this.i=i;
+        this.j=j;
+        this.d=d;
+    }
+}
+class Solution {
+    int shortestDistance(int N, int M, int A[][], int X, int Y) {
+        if(A[0][0]==0){
+            return -1;
+        }
+        int visited[][]=new int[N][M];
+        Queue<Pair>q1=new LinkedList<>();
+        q1.add(new Pair(0,0,0));
+        visited[0][0]=1;
+        while(!q1.isEmpty()){
+            Pair front=q1.poll();
+            if(front.i==X && front.j==Y){
+                return front.d;
+            }
+            if(front.i-1>=0 && A[front.i-1][front.j]==1 && visited[front.i-1][front.j]==0){
+                Pair p1=new Pair(front.i-1,front.j,front.d+1);
+                q1.add(p1);
+                visited[front.i-1][front.j]=1;
+            }
+            if(front.j+1<A[0].length && A[front.i][front.j+1]==1 && visited[front.i][front.j+1]==0){
+                Pair p1=new Pair(front.i,front.j+1,front.d+1);
+                q1.add(p1);
+                visited[front.i][front.j+1]=1;
+            }
+            if(front.i+1<A.length && A[front.i+1][front.j]==1 && visited[front.i+1][front.j]==0){
+                Pair p1=new Pair(front.i+1,front.j,front.d+1);
+                q1.add(p1);
+                visited[p1.i][p1.j]=1;
+            }
+            if(front.j-1>=0 && A[front.i][front.j-1]==1 && visited[front.i][front.j-1]==0){
+                Pair p1=new Pair(front.i,front.j-1,front.d+1);
+                q1.add(p1);
+                visited[p1.i][p1.j]=1;
+                
+            }
+        }
+        return -1;
+    }
+};
