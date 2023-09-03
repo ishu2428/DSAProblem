@@ -1,0 +1,74 @@
+Leftmost and rightmost nodes of binary tree
+
+Given a Binary Tree of size N, Print the corner nodes ie- the node at the leftmost and rightmost of each level.
+
+Example 1:
+
+Input :
+         1
+       /  \
+     2      3
+    / \    / \
+   4   5  6   7    
+Output: 1 2 3 4 7
+Explanation:
+Corners at level 0: 1
+Corners at level 1: 2 3
+Corners at level 2: 4 7
+Example 2:
+
+Input:
+
+        10
+      /    \
+     20     30
+    / \  
+   40  60
+Output: 10 20 30 40 60
+
+//code
+class Tree
+{
+    public static void printCorner(Node root)
+    {
+        ArrayList<Integer>ans=new ArrayList<>();
+        helper(root,ans);
+        for(int i=0;i<ans.size();i++){
+            System.out.print(ans.get(i)+" ");
+        }
+        
+    }
+    public static void helper(Node root,ArrayList<Integer>ans){
+        Queue<Node>q1=new LinkedList<>();
+        q1.add(root);
+        q1.add(null);
+        ArrayList<Integer>temp=new ArrayList<>();
+        while(!q1.isEmpty()){
+            Node front=q1.poll();
+            if(front==null){
+                break;
+            }
+            temp.add(front.data);
+            if(front.left!=null){
+                q1.add(front.left);
+            }
+            if(front.right!=null){
+                q1.add(front.right);
+            }
+            if(q1.peek()==null){
+                if(temp.size()==1){
+                    ans.add(temp.get(0));
+                }
+                else{
+                    ans.add(temp.get(0));
+                    ans.add(temp.get(temp.size()-1));
+                }
+                q1.poll();
+                q1.add(null);
+                temp=new ArrayList<>();
+            }
+        }
+        
+    }
+    
+}
