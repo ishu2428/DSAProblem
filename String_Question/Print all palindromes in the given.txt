@@ -1,0 +1,50 @@
+Print all palindromes in the given range
+
+Given two integers M and N denoting the range. The task is to return all palindromes in the given range.
+
+Example 1:
+
+Input:
+M = 10, N = 115
+Output: 11 22 33 44 55 66 77 88 99 101 111
+Example 2:
+
+Input:
+M = 2, N = 5
+Output: 2 3 4 5
+
+Code:-
+
+
+class Solution {
+    public static ArrayList<Integer> printPalindromes(int m, int n) {
+        ArrayList<Integer>ans=new ArrayList<>();
+        for(int i=m;i<=n;i++)
+        {
+            if(check(i)){
+                ans.add(i);
+            }
+        }
+        return ans;
+    }
+    public static boolean check(int n)
+    {
+        int n1=n;
+        int rev=0;
+        while(n!=0)
+        {
+            int rem=n%10;
+            rev=rev*10+rem;
+            n=n/10;
+        }
+        if(n1==rev)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
