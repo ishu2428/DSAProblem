@@ -1,0 +1,78 @@
+Next greater number set digits
+
+Given a number n, find the smallest number that has the same set of digits as n and is greater than n. If n is the greatest possible number with its set of digits, report it.
+
+Example 1:
+
+Input:
+N = 143
+Output: 314
+Explanation: Numbers possible with digits
+1, 3 and 4 are: 134, 143, 314, 341, 413, 431.
+The first greater number after 143 is 314.
+Example 2:
+
+Input:
+N = 431
+Output: not possible
+Explanation: Numbers possible with digits
+1, 3 and 4 are: 134, 143, 314, 341, 413, 431.
+Clearly, there's no number greater than 431.
+
+Code:-
+
+class Solution {
+    public int findNext(int n) {
+        ArrayList<Integer>t1=new ArrayList<>();
+        
+        while(n!=0)
+        {
+            int rem=n%10;
+            if(t1.isEmpty())
+            {
+                t1.add(rem);
+            }
+            else
+            {
+                if(rem>=t1.get(t1.size()-1))
+                {
+                    t1.add(rem);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            n=n/10;
+            
+        }
+        if(n==0)
+        {
+            return -1;
+        }
+        else
+        {
+            int rem=n%10;
+            n=n/10;
+            for(int i=0;i<t1.size();i++)
+            {
+                if(t1.get(i)>rem)
+                {
+                    int temp=t1.get(i);
+                    t1.set(i,rem);
+                    rem=temp;
+                    break;
+                }
+            }
+            Collections.reverse(t1);
+            //Collections.sort(t1);
+            //System.out.println(rem);
+            t1.add(rem);
+        }
+        for(int i=t1.size()-1;i>=0;i--)
+        {
+            n=n*10+t1.get(i);
+        }
+        return n;
+    }
+}

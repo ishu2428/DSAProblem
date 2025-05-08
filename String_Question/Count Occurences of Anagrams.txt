@@ -1,0 +1,67 @@
+Count Occurences of Anagrams
+
+Given a word pat and a text txt. Return the count of the occurrences of anagrams of the word in the text.
+
+Example 1:
+
+Input: txt = "forxxorfxdofr", pat = "for"
+Output: 3
+Explanation: for, orf and ofr appears in the txt, hence answer is 3.
+Example 2:
+
+Input: txt = "aabaabaa", pat = "aaba"
+Output: 4
+Explanation: aaba is present 4 times in txt.
+
+Code:-
+
+class Solution {
+
+    int search(String pat, String txt) 
+    {
+        HashMap<Character,Integer>map1=new HashMap<>();
+        for(int i=0;i<pat.length();i++)
+        {
+            if(map1.containsKey(pat.charAt(i)))
+            {
+                map1.put(pat.charAt(i),map1.get(pat.charAt(i))+1);
+            }
+            else
+            {
+                map1.put(pat.charAt(i),1);
+            }
+        }
+        HashMap<Character,Integer>map2=new HashMap<>();
+        int j=0;
+        int ans=0;
+        for(int i=0;i<txt.length();i++)
+        {
+            if(map2.containsKey(txt.charAt(i)))
+            {
+                map2.put(txt.charAt(i),map2.get(txt.charAt(i))+1);
+            }
+            else
+            {
+                map2.put(txt.charAt(i),1);
+            }
+            if(i-j+1==pat.length())
+            {
+                if(map1.equals(map2))
+                {
+                    ans++;    
+                }
+                if(map2.get(txt.charAt(j))==1)
+                {
+                    map2.remove(txt.charAt(j));
+                }
+                else
+                {
+                    map2.put(txt.charAt(j),map2.get(txt.charAt(j))-1);
+                }
+                j++;
+            }
+        }
+        return ans;
+        
+    }
+}
