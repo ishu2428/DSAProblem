@@ -1,0 +1,65 @@
+Union of Two Linked Lists
+
+Given two linked lists (L1 & L2), your task is to complete the function makeUnion(), which returns the union list of two linked lists. This union list should include all the distinct elements only and it should be sorted in ascending order.
+
+Examples:
+
+Input: L1 = 9->6->4->2->3->8, L2 = 1->2->8->6->2
+Output: 1 -> 2 -> 3 -> 4 -> 6 -> 8 -> 9
+
+Explanation: All the distinct numbers from two lists, when sorted form the list in the output. 
+Input: L1 = 1->5->1->2->2->5, L2 = 4->5->6->7->1
+Output: 1 -> 2 -> 4 -> 5 -> 6 -> 7
+
+Explaination: All the distinct numbers from two lists, when sorted forms the list in the output.
+
+Code:-
+
+class Solution {
+    public static Node findUnion(Node head1, Node head2) {
+        HashSet<Integer>set=new HashSet<>();
+        ArrayList<Integer>ans=new ArrayList<>();
+        Node temp1=head1;
+        while(temp1!=null)
+        {
+            if(set.contains(temp1.data))
+            {
+                temp1=temp1.next;
+                continue;
+            }
+            set.add(temp1.data);
+            ans.add(temp1.data);
+            temp1=temp1.next;
+        }
+        Node temp2=head2;
+        while(temp2!=null)
+        {
+            if(set.contains(temp2.data))
+            {
+                temp2=temp2.next;
+                continue;
+            }
+            set.add(temp2.data);
+            ans.add(temp2.data);
+            temp2=temp2.next;
+        }
+        Collections.sort(ans);
+        Node ansHead=null;
+        Node ansTail=null;
+        for(int i=0;i<ans.size();i++)
+        {
+            Node n1=new Node(ans.get(i));
+            if(ansHead==null)
+            {
+                ansHead=n1;
+                ansTail=n1;
+            }
+            else
+            {
+                ansTail.next=n1;
+                ansTail=n1;
+            }
+        }
+        return ansHead;
+    }
+}
