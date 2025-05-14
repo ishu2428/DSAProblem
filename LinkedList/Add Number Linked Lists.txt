@@ -1,0 +1,133 @@
+Add Number Linked Lists
+
+Given the head of two singly linked lists num1 and num2 representing two non-negative integers. The task is to return the head of the linked list representing the sum of these two numbers.
+
+For example, num1 represented by the linked list : 1 -> 9 -> 0, similarly num2 represented by the linked list: 2 -> 5. Sum of these two numbers is represented by 2 -> 1 -> 5.
+
+Note: There can be leading zeros in the input lists, but there should not be any leading zeros in the output list.
+
+Examples:
+
+Input: num1 = 4 - > 5, num2 = 3 -> 4 -> 5
+Output:  3 -> 9 -> 0
+ 
+Explanation: Given numbers are 45 and 345. There sum is 390.
+Input: num1 = 0 -> 0 -> 6 -> 3, num2 = 0 -> 7 
+Output: 7 -> 0 
+ 
+Explanation: Given numbers are 63 and 7. There sum is 70.
+
+Code:-
+
+
+class Solution {
+    static Node addTwoLists(Node head1, Node head2)
+    {
+        while(head1!=null && head1.data==0)
+        {
+            head1=head1.next;
+        }
+        while(head2!=null && head2.data==0)
+        {
+            head2=head2.next;
+        }
+        Node rev1=reverse(head1);
+        Node rev2=reverse(head2);
+        Node ans=add(rev1,rev2);
+        return reverse(ans);
+    }
+    public static Node add(Node head1,Node head2)
+    {
+        Node temp1=head1;
+        Node temp2=head2;
+        int carry=0;
+        Node ansHead=null;
+        Node ansTail=null;
+        while(temp1!=null && temp2!=null)
+        {
+            int t1=temp1.data+temp2.data+carry;
+            carry=t1/10;
+            t1=t1%10;
+            Node n1=new Node(t1);
+            if(ansHead==null)
+            {
+                ansHead=n1;
+                ansTail=n1;
+            }
+            else
+            {
+                ansTail.next=n1;
+                ansTail=n1;
+            }
+            temp1=temp1.next;
+            temp2=temp2.next;
+        }
+        
+        while(temp1!=null)
+        {
+            int t1=temp1.data+carry;
+            carry=t1/10;
+            t1=t1%10;
+            Node n1=new Node(t1);
+            if(ansHead==null)
+            {
+                ansHead=n1;
+                ansTail=n1;
+            }
+            else
+            {
+                ansTail.next=n1;
+                ansTail=n1;
+            }
+            temp1=temp1.next;
+        }
+        
+        while(temp2!=null)
+        {
+            int t1=temp2.data+carry;
+            carry=t1/10;
+            t1=t1%10;
+            Node n1=new Node(t1);
+            if(ansHead==null)
+            {
+                ansHead=n1;
+                ansTail=n1;
+            }
+            else
+            {
+                ansTail.next=n1;
+                ansTail=n1;
+            }
+            temp2=temp2.next;
+        }
+        if(carry!=0)
+        {
+            Node n1=new Node(carry);
+             if(ansHead==null)
+            {
+                ansHead=n1;
+                ansTail=n1;
+            }
+            else
+            {
+                ansTail.next=n1;
+                ansTail=n1;
+            }
+        }
+        return ansHead;
+    }
+    public static Node reverse(Node head)
+    {
+        Node temp=head;
+        Node prev=null;
+        Node frd=null;
+        while(temp!=null)
+        {
+            frd=temp.next;
+            temp.next=prev;
+            prev=temp;
+            temp=frd;
+        }
+        return prev;
+    }
+}
