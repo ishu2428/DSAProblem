@@ -1,0 +1,79 @@
+Palindrome Linked List
+
+Given a head singly linked list of positive integers. The task is to check if the given linked list is palindrome or not.
+
+Examples:
+
+Input: head: 1 -> 2 -> 1 -> 1 -> 2 -> 1
+Output: true
+Explanation: The given linked list is 1 -> 2 -> 1 -> 1 -> 2 -> 1 , which is a palindrome and Hence, the output is true.
+
+Input: head: 1 -> 2 -> 3 -> 4
+Output: false
+Explanation: The given linked list is 1 -> 2 -> 3 -> 4, which is not a palindrome and Hence, the output is false.
+
+
+Code:-
+
+class Solution {
+    // Function to check whether the list is palindrome.
+    static boolean isPalindrome(Node head) 
+    {
+        if(head==null || head.next==null)
+        {
+            return true;
+        }
+        int l1=length(head);
+        //System.out.println(l1 +"Hello");
+        int mid=l1/2;
+        Node temp=head;
+        int count=1;
+        while(count!=mid)
+        {
+            count++;
+            temp=temp.next;
+        }
+        Node firstHalf=head;
+        Node secondHalf=temp.next;
+        temp.next=null;
+        secondHalf=reverse(secondHalf);
+        while(firstHalf!=null && secondHalf!=null)
+        {
+            //System.out.println(firstHalf.data+" "+secondHalf.data);
+            if(firstHalf.data!=secondHalf.data)
+            {
+                return false;
+            }
+            
+            firstHalf=firstHalf.next;
+            secondHalf=secondHalf.next;
+        }
+        return true;
+        
+    }
+    public static Node reverse(Node head)
+    {
+        Node prev=null;
+        Node frd=null;
+        Node temp=head;
+        while(temp!=null)
+        {
+            frd=temp.next;
+            temp.next=prev;
+            prev=temp;
+            temp=frd;
+        }
+        return prev;
+    }
+    public static int length(Node head)
+    {
+        int count=0;
+        Node temp=head;
+        while(temp!=null)
+        {
+            count++;
+            temp=temp.next;
+        }
+        return count;
+    }
+}
