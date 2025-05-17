@@ -1,0 +1,55 @@
+Print Bracket Number
+
+Given a valid expression exp of length N consisting of some brackets. The task is to print the bracket numbers when the expression is being parsed.
+
+Example 1:
+
+Input:
+S = "(a+(b*c))+(d/e)"
+Output: 1 2 2 1 3 3
+Explanation: The highlighted brackets in the 
+given expression (a+(b*c))+(d/e) has been 
+assigned the numbers as: 1 2 2 1 3 3.
+
+Example 2:
+
+Input:
+S = "((())(()))"
+Output: 1 2 3 3 2 4 5 5 4 1 
+ 
+
+Your Task:  
+You don't need to read input or print anything. Your task is to complete the function printBracketNumber() which takes a string as input and returns a list of integers as output.
+
+ 
+
+Expected Time Complexity: O(|S|)
+Expected Auxiliary Space: O(|S|)
+
+
+Code:-
+
+class Solution {
+    public static ArrayList<Integer> printBracketNumber(String str)
+    {
+        ArrayList<Integer>ans=new ArrayList<>();
+        Stack<Integer>s1=new Stack<>();
+        int c1=1;
+        for(int i=0;i<str.length();i++)
+        {
+            if(str.charAt(i)=='(')
+            {
+                ans.add(c1);
+                s1.push(c1);
+                c1++;
+            }
+            else if(str.charAt(i)==')')
+            {
+                int t1=s1.pop();
+                ans.add(t1);
+            }
+        }
+        return ans;
+        
+    }
+}
