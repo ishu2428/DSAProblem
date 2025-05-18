@@ -1,0 +1,48 @@
+Minimum Parantheses
+
+Given a string, S consisting of only '(' and ')'. Return the minimum number of parentheses ‘(‘ or ‘)’ (at any positions) that must be added to make the resulting parentheses string valid.
+
+A string is valid if:
+
+Open brackets must be closed by the corresponding closing bracket.
+Open brackets must be closed in the correct order.
+
+Example 1:
+
+Input:
+S = "())"
+Output: 1 
+Explanation: One '(' is required at beginning.
+Example 2:
+
+Input:
+S = "(((" 
+Output: 3 
+Explanation: Three ')' is required at end.
+
+Code:-
+
+class Solution {
+    int MinParentheses(String str) 
+    {
+        Stack<Character>s1=new Stack<>();
+        for(int i=0;i<str.length();i++)
+        {
+            if(s1.isEmpty() || str.charAt(i)=='(')
+            {
+                s1.push(str.charAt(i));
+            }
+            else if(!s1.isEmpty() &&  str.charAt(i)==')' && s1.peek()=='(')
+            {
+                s1.pop();    
+            }
+            else
+            {
+                s1.push(str.charAt(i));
+            }
+        }
+        int ans=0;
+        ans=ans+s1.size();
+        return ans;
+    }
+}
