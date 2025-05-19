@@ -1,0 +1,129 @@
+Number of Students Unable to Eat Lunch
+
+The school cafeteria offers circular and square sandwiches at lunch break, referred to by numbers 0 and 1 respectively. All students stand in a queue. Each student either prefers square or circular sandwiches.
+
+The number of sandwiches in the cafeteria is equal to the number of students. The sandwiches are placed in a stack. At each step:
+
+If the student at the front of the queue prefers the sandwich on the top of the stack, they will take it and leave the queue.
+Otherwise, they will leave it and go to the queue's end.
+This continues until none of the queue students want to take the top sandwich and are thus unable to eat.
+
+You are given two integer arrays students[] and sandwiches[] of the same size N where sandwiches[i] is the type of the ith sandwich in the stack (i = 0 is the top of the stack) and students[j] is the preference of the jth student in the initial queue (j = 0 is the front of the queue). Return the number of students that are unable to eat.
+
+Example 1:
+
+Input:
+students = [1,1,0,0]
+sandwiches = [0,1,0,1]
+Output:
+0
+Explanation:
+- Front student leaves the top sandwich 
+and returns to the end of the line making 
+students = [1,0,0,1].
+- Front student leaves the top sandwich 
+and returns to the end of the line 
+making students = [0,0,1,1].
+- Front student takes the top sandwich 
+and leaves the line making 
+students = [0,1,1] and sandwiches = [1,0,1].
+- Front student leaves the top sandwich and 
+returns to the end of the line making 
+students = [1,1,0].
+- Front student takes the top sandwich and 
+leaves the line making students = [1,0] 
+and sandwiches = [0,1].
+- Front student leaves the top sandwich 
+and returns to the end of the line 
+making students = [0,1].
+- Front student takes the top sandwich 
+and leaves the line making 
+students = [1] and sandwiches = [1].
+- Front student takes the top sandwich 
+and leaves the line making 
+students = [] and sandwiches = [].
+Hence all students are able to eat.
+ 
+
+Example 2:
+
+Input:
+students = [1,1,1,0,0,1]
+sandwiches = [1,0,0,0,1,1]
+Output :
+3
+Explanation:
+- Front student takes the top sandwich
+and leaves the line making
+students = [1,1,0,0,1] and 
+sandwiches = [0,0,0,1,1].
+- Front student leaves the top sandwich
+and returns to the end of the line
+making students = [1,0,0,1,1]. 
+- Front student leaves the top sandwich
+and returns to the end of the line
+making students = [0,0,1,1,1].
+- Front student takes the top sandwich
+and leaves the line making
+students = [0,1,1,1] and
+sandwiches = [0,0,1,1].
+- Front student takes the top sandwich
+and leaves the line making
+students = [1,1,1] and
+sandwiches = [0,1,1].
+Now no student can take the sandwich at 
+the front. So, 3 students are unable to eat.
+
+Your Task:  
+You don't need to read input or print anything. Your task is to complete the function countStudents() which takes the two integers arrays students[] and sandwiches[] as input parameters and returns an integer the number of students that are unable to eat.
+
+
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(1)
+
+Code:-
+
+class Solution {
+    public static int countStudents(int[] students, int[] sandwiches)
+    {
+        int zero=0;
+        int one=0;
+        for(int i=0;i<students.length;i++)
+        {
+            if(students[i]==1)
+            {
+                one++;
+            }
+            else
+            {
+                zero++;
+            }
+        }
+        for(int i=0;i<sandwiches.length;i++)
+        {
+            if(sandwiches[i]==0)
+            {
+                if(zero>=1)
+                {
+                    zero--;
+                }
+                else
+                {
+                    return one;
+                }
+            }
+            else
+            {
+                if(one>=1)
+                {
+                    one--;
+                }
+                else
+                {
+                    return zero;
+                }
+            }
+        }
+        return 0;
+    }
+}
