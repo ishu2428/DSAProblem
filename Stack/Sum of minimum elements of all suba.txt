@@ -1,0 +1,83 @@
+Sum of minimum elements of all subarrays
+
+Given an array A of n integers. The task is to find the sum of the minimum of all possible (contiguous) subarray of A.
+
+ 
+
+Example 1:
+
+Input: A = [3, 1, 2, 4] 
+Output: 17
+Explanation: 
+Subarrays are [3], [1], [2], [4],
+[3, 1], [1, 2], [2, 4], [3, 1, 2], 
+[1, 2, 4], [3, 1, 2, 4]. 
+Minimums are 3, 1, 2, 4, 1, 1, 2, 
+1, 1, 1. So, Sum is 17.
+Example 2:
+
+Input: A = [1, 2, 3, 4]
+Output: 20
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function sumOfSubarrayMins() which takes an array arr[] as input parameter and returns an integer denoting the sum of the minimum of all possible subarray.
+
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(N)
+
+Code:-
+
+class Solution {
+    public long sumOfSubarrayMins(int[] arr)
+    {
+        int left[]=new int[arr.length];
+        int right[]=new int[arr.length];
+        Stack<Integer>s1=new Stack<>();
+        for(int i=0;i<arr.length;)
+        {
+            if(s1.isEmpty())
+            {
+                left[i]=-1;
+                s1.push(i);
+                i++;
+            }
+            else if(arr[i]>arr[s1.peek()])
+            {
+                left[i]=s1.peek();
+                s1.push(i);
+                i++;
+            }
+            else
+            {
+                s1.pop();
+            }
+        }
+        s1=new Stack<>();
+        for(int i=arr.length-1;i>=0;)
+        {
+            if(s1.isEmpty())
+            {
+                s1.push(i);
+                right[i]=arr.length;
+                i--;
+            }
+            else if(arr[i]>=arr[s1.peek()])
+            {
+                right[i]=s1.peek();
+                s1.push(i);
+                i--;
+            }
+            else
+            {
+                s1.pop();
+            }
+        }
+        long ans=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            long t1=(i-left[i])*(right[i]-i);
+            long sAns=(t1*arr[i]*1L)%1000000007;
+            ans=ans+sAns;
+        }
+        return (ans);
+    }
+}
