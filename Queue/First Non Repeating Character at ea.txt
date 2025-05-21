@@ -1,0 +1,74 @@
+First Non Repeating Character at each instance in a stream of Characters
+
+Given a string str which denotes stream of characters. Your task is to find a new string output_str.
+output_str is formed such that we have to find first non-repeating character at each instance when a character is inserted to the stream and append it at the end of output_str. If no such non-repeating charater is found then append 'X' at the end of output_str
+ 
+
+Example 1:
+
+Input: str = "dabc"
+Output: "dddd"
+Explanation: 
+"d" - first non-repeating chararcter 'd'.
+"da" - first non-repeating chararcter 'd'.
+"dab" - first non-repeating chararcter 'd'.
+"dabc" - first non-repeating chararcter 'd'
+Example 2:
+
+Input: str = "bbe"
+Output: "bXe"
+Explanation: 
+"b" - first non-repeating character 'b'
+"bb" - no non-repeating character so 'X'
+"bbe" - first non-repeating character 'e'
+ 
+
+Your Task:
+You don't need to read or print anything. Your task is to complete the function firstNonRepeating() which takes str as input parameter and returns output_str.
+ 
+
+Expected Time Complexity: O(|str|*26)
+Expected Auxilary Space : O(1)
+ 
+
+Code:-
+
+class Solution {
+    public String firstNonRepeating(String str) 
+    {
+        HashMap<Character,Integer>map=new HashMap<>();
+        StringBuffer ans=new StringBuffer();
+        int j=0;
+        for(int i=0;i<str.length();i++)
+        {
+            if(map.containsKey(str.charAt(i)))
+            {
+                map.put(str.charAt(i),map.get(str.charAt(i))+1);
+            }
+            else
+            {
+                map.put(str.charAt(i),1);
+            }
+            if(map.get(str.charAt(j))==1)
+            {
+                ans.append(str.charAt(j));
+            }
+            else
+            {
+                while(j<=i && map.get(str.charAt(j))>1)
+                {
+                    j++;
+                }
+                if(j>i)
+                {
+                    ans.append('X');
+                }
+                else
+                {
+                    ans.append(str.charAt(j));
+                }
+            }
+        }
+        return ans.toString();
+    }
+}
