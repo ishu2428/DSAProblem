@@ -1,0 +1,65 @@
+Maximum Width of Tree
+
+Difficulty: EasyAccuracy: 63.27%Submissions: 84K+Points: 2Average Time: 20m
+Given a Binary Tree, find the maximum width of it. Maximum width is defined as the maximum number of nodes at any level.
+
+Examples:
+
+Input: root = [1, 2, 3]
+       1
+     /    \
+    2      3
+Output: 2
+Explanation: On the first level there is only one node 1. On the second level there are two nodes 2, 3 clearly it is the maximum number of nodes at any level
+Input: root = [10, 20, 30, 40, 60]
+        10
+      /     \
+    20      30
+   /    \
+  40    60
+Output: 2
+Explanation: There is one node on level 1(10) There is two node on level 2(20, 30) There is two node on level 3(40, 60) Hence the answer is 2
+Expected Time Complexity: O(n).
+Expected Auxiliary Space: O(width of the tree).
+
+Code:-
+
+class Solution {
+    // Function to get the maximum width of a binary tree.
+    int getMaxWidth(Node root) {
+        int max=Integer.MIN_VALUE;
+        Queue<Node>q1=new LinkedList<>();
+        q1.add(root);
+        q1.add(null);
+        int count=0;
+        while(!q1.isEmpty())
+        {
+            Node front=q1.poll();
+            if(front==null)
+            {
+               break;
+            }
+            count++;
+            if(front.left!=null)
+            {
+                q1.add(front.left);
+            }
+            if(front.right!=null)
+            {
+                q1.add(front.right);
+            }
+            if(q1.peek()==null)
+            {
+                q1.poll();
+                q1.add(null);
+                if(max<count)
+                {
+                    max=count;
+                }
+                count=0;
+            }
+        }
+        return max;
+        
+    }
+}
