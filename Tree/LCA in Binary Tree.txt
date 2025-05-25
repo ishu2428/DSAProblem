@@ -1,0 +1,96 @@
+LCA in Binary Tree
+
+Given a Binary Tree with all unique values and two nodes value, n1 and n2. The task is to find the lowest common ancestor of the given two nodes. We may assume that either both n1 and n2 are present in the tree or none of them are present.
+
+LCA: It is the first common ancestor of both the nodes n1 and n2 from bottom of tree.
+
+Examples:
+
+Input: root = [1,2,3,4,5,6,7], n1 = 5 , n2 = 6
+
+      
+Output: 1
+Explanation: LCA of 5 and 6 is 1.
+Input: root = [5, 2, N, 3, 4], n1 = 3 , n2 = 4 
+
+           5    
+          /    
+         2  
+        / \  
+       3   4
+Output: 2
+Explanation: LCA of 3 and 4 is 2. 
+Input: root = [5, 2, N, 3, 4], n1 = 5 , n2 = 4 
+
+           5    
+          /    
+         2  
+        / \  
+       3   4
+Output: 5
+Explanation: LCA of 5 and 4 is 5. 
+
+Code:---------------------------------------------------------------------------------------
+
+
+class Solution {
+    
+    
+    Node lca(Node root, int n1, int n2) 
+    {
+        ArrayList<Node>ans=new ArrayList<>();
+        findPath(root,ans,n1);
+        for(int i=0;i<ans.size();i++)
+        {
+            if(helper(ans.get(i),n2))
+            {
+                return ans.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public boolean helper(Node root,int n1)
+    {
+        if(root==null)
+        {
+            return false;
+        }
+        if(root.data==n1)
+        {
+            return true;
+        }
+        if(helper(root.left,n1))
+        {
+            return true;
+        }
+        if(helper(root.right,n1))
+        {
+            return true;
+        }
+        return false;
+    }
+    public boolean findPath(Node root,ArrayList<Node>ans,int n1)
+    {
+        if(root==null)
+        {
+            return false;
+        }
+        if(root.data==n1)
+        {
+            ans.add(root);
+            return true;
+        }
+        if(findPath(root.left,ans,n1))
+        {
+            ans.add(root);
+            return true;
+        }
+        if(findPath(root.right,ans,n1))
+        {
+            ans.add(root);
+            return true;
+        }
+        return false;
+    }
+}
