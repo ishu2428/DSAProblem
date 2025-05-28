@@ -1,0 +1,84 @@
+Nodes at given distance in binary tree
+
+Given a binary tree, a target node in the binary tree, and an integer value k, find all the nodes that are at a distance k from the given target node. No parent pointers are available.
+Note:
+
+You have to return the list in sorted order.
+The tree will not contain duplicate values.
+Examples:
+
+Input: root = [1, 2, 3, 4, 5], target = 2, k = 2   
+
+Output: [3]
+Explanation: Nodes at a distance 2 from the given node 2 is 3.
+Input: root = [1, 2, 3, 4, 5, 6, 7], target = 3, k = 1
+
+Output: [1, 6, 7]
+Explanation: Nodes at a distance 1 from the given target node 3 are 1, 6 & 7.
+
+Code-----------------------------------------------------------------------------------------------------------------------
+
+class Solution {
+    public static ArrayList<Integer> KDistanceNodes(Node root, int target, int k) 
+    {
+        ArrayList<Node>path=new ArrayList<>();
+        findPath(root,target,path);
+        ArrayList<Integer>ans=new ArrayList<>();
+        for(int i=0;i<path.size();i++)
+        {
+            if(i==0)
+            {
+                helper(path.get(i),k,null,ans);
+            }
+            else
+            {
+                helper(path.get(i),k-i,path.get(i-1),ans);
+            }
+        }
+        Collections.sort(ans);
+        return ans;
+    }
+    public static void helper(Node root,int k,Node prev,ArrayList<Integer>ans)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        if(root==prev)
+        {
+            return;
+        }
+        if(k==0)
+        {
+            ans.add(root.data);
+            return;
+        }
+        helper(root.left,k-1,prev,ans);
+        helper(root.right,k-1,prev,ans);
+    }
+    
+    public static boolean findPath(Node root,int target,ArrayList<Node>path)
+    {
+        if(root==null)
+        {
+            return false;
+        }
+        if(root.data==target)
+        {
+            path.add(root);
+            return true;
+        }
+        
+        if(findPath(root.left,target,path))
+        {
+            path.add(root);
+            return true;
+        }
+        if(findPath(root.right,target,path))
+        {
+            path.add(root);
+            return true;
+        }
+        return false;
+    }
+};
