@@ -1,0 +1,112 @@
+Max rectangle
+
+Given a binary matrix mat[][] of size n * m. Find the maximum area of a rectangle formed only of 1s in the given matrix.
+
+Examples:
+
+Input: mat[][] = [[0, 1, 1, 0],
+                [1, 1, 1, 1],
+                [1, 1, 1, 1],
+                [1, 1, 0, 0]]
+Output: 8
+Explanation: The largest rectangle with only 1’s is from (1, 0) to (2, 3) which is
+[1, 1, 1, 1]
+[1, 1, 1, 1]
+and area is 4 *2 = 8.
+Input: mat[][] = [[0, 1, 1],
+                [1, 1, 1],
+                [0, 1, 1]]
+Output: 6
+Explanation: The largest rectangle with only 1’s is from (0, 1) to (2, 2) which is
+[1, 1]
+[1, 1]
+[1, 1]
+
+Code:----
+
+class Solution {
+    // Returns area of the largest rectangle with all 1s in mat[][]
+    static int maxArea(int mat[][]) 
+    {
+        for(int i=1;i<mat.length;i++)
+        {
+            for(int j=0;j<mat[0].length;j++)
+            {
+                if(mat[i][j]!=0)
+                {
+                    mat[i][j]=mat[i][j]+mat[i-1][j];
+                }
+            }
+        }
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<mat.length;i++)
+        {
+            int ans=helper(mat[i]);
+            
+            if(max<ans)
+            {
+                max=ans;
+            }
+        }
+        return max;
+    }
+    public static int helper(int arr[])
+    {
+        Stack<Integer>s1=new Stack<>();
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<arr.length;)
+        {
+            if(s1.isEmpty())
+            {
+                s1.push(i);
+                i++;
+            }
+            else if(arr[s1.peek()]<=arr[i])
+            {
+                s1.push(i);
+                i++;
+            }
+            else
+            {
+                int t1=s1.pop();
+               
+                int b1=arr[t1];
+                int l1=0;
+                if(s1.isEmpty())
+                {
+                    l1=i;
+                }
+                else
+                {
+                    l1=i-s1.peek()-1;
+                }
+                int area=l1*b1;
+                if(max<area)
+                {
+                    max=area;
+                }
+            }
+        }
+        int n=arr.length;
+        while(!s1.isEmpty())
+        {
+            int t1=s1.pop();
+            int l1=0;
+            if(s1.isEmpty())
+            {
+                l1=n;
+            }
+            else
+            {
+                l1=n-s1.peek()-1;
+            }
+            int b1=arr[t1];
+            int area=l1*b1;
+            if(max<area)
+            {
+                max=area;
+            }
+        }
+        return max;
+    }
+}
