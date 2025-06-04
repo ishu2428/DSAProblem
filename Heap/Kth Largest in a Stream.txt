@@ -1,0 +1,71 @@
+Kth Largest in a Stream
+
+Given an input stream arr[] of n integers. Find the Kth largest element (not Kth largest unique element) after insertion of each element in the stream and if the Kth largest element doesn't exist, the answer will be -1 for that insertion.  return a list of size n after all insertions.
+
+Example 1:
+
+Input:
+k = 4, n = 6
+arr[] = {1, 2, 3, 4, 5, 6}
+Output:
+-1 -1 -1 1 2 3
+Explanation:
+k = 4
+For 1, the 4th largest element doesn't
+exist so answer will be -1.
+For 2, the 4th largest element doesn't
+exist so answer will be -1.
+For 3, the 4th largest element doesn't
+exist so answer will be -1.
+For 4, the 4th largest element is 1.
+For 5, the 4th largest element is 2.
+for 6, the 4th largest element is 3.
+Example 2:
+
+Input:
+k = 1, n = 2
+arr[] = {3, 4}
+Output:
+3 4 
+Explanation: 
+For the 1st and 2nd element the 1st largest 
+element is itself.
+
+code------------------------------------------------------------------
+
+class Solution 
+{
+    static int[] kthLargest(int k, int[] arr, int n) 
+    {
+       int ans[]=new int[n];
+       PriorityQueue<Integer>pq=new PriorityQueue<>();
+       int j=0;
+       int k1=0;
+       for(int i=0;i<arr.length;i++)
+       {
+           if(i<k)
+           {
+               pq.add(arr[i]);
+           }
+           else if(pq.peek()<arr[i])
+           {
+               pq.poll();
+               pq.add(arr[i]);
+           }
+          
+           if(i-j+1==k)
+           {
+               int t1=pq.peek();
+                ans[k1++]=t1;
+               
+               j++;
+           }
+           else
+           {
+               ans[k1++]=-1;
+           }
+       }
+       return ans;
+      
+    }
+};
