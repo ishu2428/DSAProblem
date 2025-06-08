@@ -1,0 +1,98 @@
+Minimum Stops
+
+A car travels from a starting position to a destination which is Dist miles right of the starting position.
+
+There are petrol pumps along the way. The petrol pumps are represented as an array pumps where pumps[i] = [positioni, fueli] indicates that the ith petrol pump is positioni miles right of the starting position and has fueli liters of petrol.
+
+The car starts with an infinite tank of petrol, which initially has P liters of petrol in it. It uses one liter of petrol per one mile that it drives. When the car reaches a petrol pump, it may stop and refuel, transferring all the petrol from the station into the car.
+
+Return the minimum number of refueling stops the car must make in order to reach its destination. If it cannot reach the destination, return -1.
+
+Note: That if the car reaches a petrol pump with 0 fuel left, the car can still refuel there. If the car reaches the destination with 0 fuel left, it is still considered to have arrived.
+
+ 
+
+Example 1:
+
+Input:
+Dist = 100
+P = 10
+Pumps = [[10,60],[20,30],[30,30],[60,40]]
+Output:
+2
+Explanation:
+We start with 10 liters of petrol.
+We drive to position 10, expending 10 liters of petrol.  
+We refuel from 0 liters to 60 liters of petrol.
+Then, we drive from position 10 to position 60 
+(expending 50 liters of petrol),
+and refuel from 10 liters to 50 liters of petrol.  
+We then drive to and reach the destination.
+We made 2 refueling stops along the way, so we return 2.
+ 
+
+Example 2:
+
+Input:
+Dist = 100
+P = 1
+Pumps = [[10,100]]
+Output:
+-1
+Explanation:
+We can not reach the destination 
+(or even the first petrol pump).
+
+
+Code:-----------------------------
+
+class Solution {
+    public int minimumStops(int Dist, int p, int[][] pumps) 
+    {
+        PriorityQueue<Integer>pq=new PriorityQueue<>(Collections.reverseOrder());
+        int maxReach=p;
+        int ans=0;
+        for(int i=0;i<pumps.length;)
+        {
+            if(maxReach>pumps[i][0])
+            {
+                pq.add(pumps[i][1]);
+                i++;
+            }
+            else if(maxReach==pumps[i][0])
+            {
+                pq.add(pumps[i][1]);
+                maxReach+=pq.poll();
+                i++;
+                ans++;
+            }
+            else
+            {
+                if(pq.isEmpty())
+                {
+                    return -1;
+                }
+                maxReach+=pq.poll();
+                ans++;
+            }
+            if(maxReach>=Dist)
+            {
+                return ans;
+            }
+            
+        }
+        while(!pq.isEmpty())
+        {
+            maxReach+=pq.poll();
+            ans++;
+            if(maxReach>=Dist)
+            {
+                return ans;
+            }
+        }
+        return -1;
+        
+    }
+
+
+}
