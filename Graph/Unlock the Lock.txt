@@ -1,0 +1,110 @@
+Unlock the Lock
+
+Geek is visiting Wonderland with his friends. He came across an interesting game. Given is a lock that consists of four circles.
+Each circle has 10 slots '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'. The circles can be rotated freely, for example, Geek can turn '9' to '0' and vice-versa. Each move consists of turning one wheel one shot.
+The lock is initially at '0000', a string representing the state of the four circles.
+Geek is presented with an array of string barriers of size N, which means if at any moment, the lock displays any of these strings, the circles will stop turning and Geek will further not be able to open it.
+Geek will win the grand prize if he is able to unlock the lock by achieving a certain target string. Return the minimum number of turns Geek must perform to open the lock, or -1 if it is impossible.
+
+Example 1:
+
+Input:
+barriers[] = {"0201","0101","0102","1212","2002"}
+target = "0202"
+Output: 6
+Explanation: 
+A sequence of valid moves would be "0000" -> "1000" 
+-> "1100" -> "1200" -> "1201" -> "1202" -> "0202".
+Note that a sequence like "0000" -> "0001" -> "0002" 
+-> "0102" -> "0202" would be invalid,
+because the wheels of the lock become stuck after 
+the display becomes the barrier "0102".
+ 
+
+Example 2:
+
+Input:
+barrier[]  = {"0000"}
+target = "8888"
+Output: -1
+
+
+Your Task:  
+You don't need to read input or print anything. Your task is to complete the function unlockLock() which takes the array barriers[] and a target string as inputs and returns the minimum moves to obtain the target string.
+
+ 
+
+Expected Time Complexity: O(N2)
+Expected Auxiliary Space: O(N2)
+
+
+Code--------------------------------
+
+// User function Template for Java
+
+class Solution {
+    public static int unlockLock(String[] barriers, String target)
+    {
+       HashSet<String>visited=new HashSet<>();
+       for(int i=0;i<barriers.length;i++)
+       {
+           visited.add(barriers[i]);
+       }
+       if(visited.contains("0000"))
+       {
+           return -1;
+       }
+       Queue<String>q1=new LinkedList<>();
+       q1.add("0000");
+       q1.add("-1");
+       visited.add("0000");
+       int count=0;
+       while(!q1.isEmpty())
+       {
+           String front=q1.poll();
+           if(front.equals("-1"))
+           {
+               break;
+           }
+           if(front.equals(target))
+           {
+               return count;
+           }
+           //StringBuilder str=new StringBuilder(front);
+           String str=front;
+           for(int i=0;i<4;i++)
+           {
+               String str1=str.substring(0,i)+(str.charAt(i)=='9'?0:(str.charAt(i)-'0'+1))+str.substring(i+1);
+               String str2=str.substring(0,i)+(str.charAt(i)=='0'?9:(str.charAt(i)-'0'-1))+str.substring(i+1);
+               if(!visited.contains(str1))
+               {
+                   visited.add(str1);
+                   q1.add(str1);
+                   if(str1.equals(target))
+                   {
+                       return count+1;
+                   }
+               }
+               if(!visited.contains(str2))
+               {
+                   visited.add(str2);
+                   q1.add(str2);
+                   if(str2.equals(target))
+                   {
+                       return count+1;
+                   }
+               }
+               
+               
+           }
+           if(q1.peek().equals("-1"))
+           {
+               q1.poll();
+               q1.add("-1");
+               count++;
+           }
+       }
+       return -1;
+        
+    }
+}

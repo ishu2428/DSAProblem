@@ -1,0 +1,103 @@
+Word Ladder I
+
+Given two distinct words startWord and targetWord, and a list denoting wordList of unique words of equal lengths. Find the length of the shortest transformation sequence from startWord to targetWord.
+Keep the following conditions in mind:
+
+A word can only consist of lowercase characters.
+Only one letter can be changed in each transformation.
+Each transformed word must exist in the wordList including the targetWord.
+startWord may or may not be part of the wordList
+The second part of this problem can be found here.
+
+Note: If no possible way to transform sequence from startWord to targetWord return 0
+
+
+Example 1:
+
+Input:
+wordList = {"des","der","dfr","dgt","dfs"}
+startWord = "der", targetWord= "dfs",
+Output:
+3
+Explanation:
+The length of the smallest transformation
+sequence from "der" to "dfs" is 3
+i,e "der" -> "dfr" -> "dfs".
+Example 2:
+
+Input:
+wordList = {"geek", "gefk"}
+startWord = "gedk", targetWord= "geek", 
+Output:
+2
+Explanation:
+gedk -> geek
+Example 3:
+
+Input: 
+wordList = {"poon", "plee", "same", "poie","plea","plie","poin"}
+startWord = "toon", targetWord= "plea",
+Output: 7 
+Explanation:
+toon -> poon -> poin -> poie -> plie -> plee -> plea 
+
+
+Code:----------------------------------------------------------------
+
+class Solution {
+    public int wordLadderLength(String startWord, String targetWord,String[] wordList) 
+    {
+        HashSet<String>set=new HashSet<>();
+        for(int i=0;i<wordList.length;i++)
+        {
+            set.add(wordList[i]);
+        }
+        if(!set.contains(targetWord))
+        {
+            return 0;
+        }
+        Queue<String>q1=new LinkedList<>();
+        q1.add(startWord);
+        q1.add("-1");
+        if(set.contains(startWord))
+        {
+            set.remove(startWord);
+        }
+        int count=1;
+        while(!q1.isEmpty())
+        {
+            String front=q1.poll();
+            if(front.equals("-1"))
+            {
+                break;
+            }
+            if(front.equals(targetWord))
+            {
+                return count;
+            }
+            for(int i=0;i<front.length();i++)
+            {
+                for(int j=0;j<26;j++)
+                {
+                    String str=front.substring(0,i)+(char)('a'+j)+front.substring(i+1);
+                    if(set.contains(str))
+                    {
+                        q1.add(str);
+                        set.remove(str);
+                    }
+                    if(str.equals(targetWord))
+                    {
+                        return count+1;
+                    }
+                }
+            }
+            if(q1.peek().equals("-1"))
+            {
+                q1.poll();
+                q1.add("-1");
+                count++;
+            }
+        }
+        return 0;
+    }
+}

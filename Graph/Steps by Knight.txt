@@ -1,0 +1,84 @@
+Steps by Knight
+
+Given a square chessboard of size (n x n), the initial position and target postion of Knight are given. Find out the minimum steps a Knight will take to reach the target position.
+
+Note: The initial and the target position coordinates of Knight have been given according to 1-base indexing.
+
+Examples:
+
+Input: n = 3, knightPos[] = [3, 3], targetPos[]= [1, 2]
+Output: 1
+Explanation:
+Knight takes 1 step to reach from 
+(3, 3) to (1 ,2).
+Input: n = 6, knightPos[] = [4, 5],targetPos[] = [1, 1]
+Output: 3
+Explanation:
+
+Knight takes 3 step to reach from 
+(4, 5) to (1, 1):
+(4, 5) -> (5, 3) -> (3, 2) -> (1, 1).
+
+
+Code:=------------------------------------
+
+
+class Pair
+{
+    int i1;
+    int j1;
+    public Pair(int i1,int j1)
+    {
+        this.i1=i1;
+        this.j1=j1;
+    }
+}
+class Solution 
+{
+    static int u[]={-2,-2,2,2,-1,1,-1,1};
+    static int v[]={-1,1,-1,1,2,2,-2,-2};
+    public int minStepToReachTarget(int knightPos[], int targetPos[], int n) {
+        Queue<Pair>q1=new LinkedList<>();
+        int visited[][]=new int[n][n];
+        q1.add(new Pair(knightPos[0]-1,knightPos[1]-1));
+        q1.add(null);
+        visited[knightPos[0]-1][knightPos[1]-1]=1;
+        int count=0;
+        while(!q1.isEmpty())
+        {
+            Pair front=q1.poll();
+            if(front==null)
+            {
+                break;
+            }
+            int i=front.i1;
+            int j=front.j1;
+            if(i==targetPos[0]-1 && j==targetPos[1]-1)
+            {
+                return count;
+            }
+            for(int k=0;k<8;k++)
+            {
+                int u1=i+u[k];
+                int v1=j+v[k];
+                if(u1>=0 && u1<n && v1>=0 && v1<n && visited[u1][v1]==0)
+                {
+                    if(u1==targetPos[0]-1 && v1==targetPos[1]-1)
+                    {
+                        return count+1;
+                    }
+                    q1.add(new Pair(u1,v1));
+                    visited[u1][v1]=1;
+                }
+            }
+            if(q1.peek()==null)
+            {
+                q1.poll();
+                q1.add(null);
+                count++;
+            }
+        }
+        return -1;
+        
+    }
+}
