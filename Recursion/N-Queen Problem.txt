@@ -1,0 +1,94 @@
+N-Queen Problem
+
+The n-queens puzzle is the problem of placing n queens on a (n × n) chessboard such that no two queens can attack each other. Note that two queens attack each other if they are placed on the same row, the same column, or the same diagonal.
+
+Given an integer n, find all distinct solutions to the n-queens puzzle.
+You can return your answer in any order but each solution should represent a distinct board configuration of the queen placements, where the solutions are represented as permutations of [1, 2, 3, ..., n]. In this representation, the number in the ith position denotes the row in which the queen is placed in the ith column.
+For eg. below figure represents a chessboard [3 1 4 2].
+
+
+
+Examples:
+
+Input: n = 1
+Output: [1]
+Explaination: Only one queen can be placed in the single cell available.
+Input: n = 4
+Output: [[2 4 1 3 ] [3 1 4 2 ]]
+Explaination: There are 2 possible solutions for n = 4.
+Input: n = 2
+Output: []
+Explaination: There are no possible solutions for n = 2.
+
+Code:=====================================================================================
+
+class Solution {
+    public ArrayList<ArrayList<Integer>> nQueen(int n) 
+    {
+        ArrayList<ArrayList<Integer>>ans=new ArrayList<>();
+        ArrayList<Integer>temp1=new ArrayList<>();
+        int chess[][]=new int[n][n];
+        helper(chess,0,temp1,ans);
+        return ans;
+    }
+    public void helper(int chess[][],int st,ArrayList<Integer>temp1,ArrayList<ArrayList<Integer>>ans)
+    {
+        if(st==chess.length)
+        {
+            ArrayList<Integer>t1=new ArrayList<>(temp1);
+            ans.add(t1);
+            return;
+        }
+        
+        for(int i=0;i<chess[st].length;i++)
+        {
+            if(isCheck(chess,st,i))
+            {
+                chess[st][i]=1;
+                temp1.add(i+1);
+                helper(chess,st+1,temp1,ans);
+                temp1.remove(st);
+                chess[st][i]=0;
+            }
+        }
+    }
+    public boolean isCheck(int chess[][],int i,int j )
+    {
+        int i1=i;
+        int j1=j;
+        while(i1>=0 && j1>=0)
+        {
+            if(chess[i1][j1]==1)
+            {
+                return false;
+            }
+            i1--;
+            j1--;
+        }
+        i1=i;
+        j1=j;
+        while(i1>=0 && j1<chess[0].length)
+        {
+            if(chess[i1][j1]==1)
+            {
+                return false;
+            }
+            i1--;
+            j1++;
+        }
+        
+        i1=i;
+        while(i1>=0)
+        {
+            if(chess[i1][j]==1)
+            {
+                return false;
+            }
+            i1--;
+        }
+        return true;
+        
+        
+        
+    }
+}
