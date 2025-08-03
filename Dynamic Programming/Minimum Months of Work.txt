@@ -1,0 +1,87 @@
+Minimum Months of Work
+
+Given an array of Integers, arr[], indicating number of work hours per month. Find Min number of months that can be chosen, so that total work hours reach a given K.
+
+
+Example 1:
+
+Input:
+N = 5
+K = 4
+Arr[] = {1, 2, 2, 3, 4}
+
+Output:
+1
+
+Explanation:
+Here, one can choose the last month and 
+can get 4 working hours.
+
+Example 2:
+
+Input:
+N = 3
+K = 2
+Arr[] = {1, 3, 5}
+
+Output: -1
+
+Explanation: Here, we can not get exactly 
+2 hours of work from any month.
+
+Code:-------------------------------------------
+
+// User function Template for Java
+
+class Solution {
+    int noOfMonths(int[] arr, int K, int N) 
+    {
+        int dp[][]=new int[arr.length+1][K+1];
+        for(int i=0;i<dp.length;i++)
+        {
+            for(int j=0;j<dp[0].length;j++)
+            {
+                dp[i][j]=-1;
+            }
+        }
+       return helper(arr,K,0,dp);
+    }
+    public int helper(int arr[],int k,int ind,int dp[][])
+    {
+        if(k==0)
+        {
+            return 0;
+        }
+        if(k<0 || ind>=arr.length)
+        {
+            return -1;
+        }
+        if(dp[ind][k]!=-1)
+        {
+            return dp[ind][k];
+        }
+        int ans1=helper(arr,k,ind+1,dp);
+        int ans2=helper(arr,k-arr[ind],ind+1,dp);
+        if(ans2>=0)
+        {
+            ans2++;
+        }
+        if(ans1<0 && ans2<0)
+        {
+            dp[ind][k]=-1;
+            return dp[ind][k];
+        }
+        if(ans1<0)
+        {
+            dp[ind][k]=ans2;
+            return dp[ind][k];
+        }
+        if(ans2<0)
+        {
+            dp[ind][k]=ans1;
+            return dp[ind][k];
+        }
+        dp[ind][k]=Math.min(ans1,ans2);
+        return dp[ind][k];
+    }
+}

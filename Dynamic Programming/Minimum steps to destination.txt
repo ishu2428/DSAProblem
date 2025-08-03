@@ -1,0 +1,34 @@
+Minimum steps to destination
+
+
+Given an infinite number line. You start at 0 and can go either to the left or to the right. The condition is that in the ith move, you must take i steps. Given a destination d, find the minimum number of steps required to reach that destination.
+
+Example 1:
+
+Input: d = 2
+Output: 3
+Explaination: The steps taken are +1, -2 and +3.
+Example 2:
+
+Input: d = 10
+Output: 4
+Explaination: The steps taken are +1, +2, +3 and +4.
+
+Code----------------
+
+// User function Template for Java
+
+class Solution {
+    static int minSteps(int d) 
+    {
+        int step=0;
+        int sum=0;
+        while(sum<d || (sum-d)%2!=0)
+        {
+            step++;
+            sum=sum+step;
+        }
+        return step;
+        
+    }
+}

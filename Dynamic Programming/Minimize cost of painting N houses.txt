@@ -1,0 +1,84 @@
+Minimize cost of painting N houses such that adjacent houses have different colors
+
+Given an integer N, an integer K and a 2D array cost[][K], where cost[i][j] is the cost of painting ith house with color j . Return the minimum cost to paint all the houses such that no two adjacent houses have the same color.
+
+ 
+
+Example 1:
+
+Input:
+N = 3, K = 3 
+cost[][3] = {{14, 2, 11}, {11, 14, 5}, {14, 3, 10}}
+Output: 10
+Explanation: Paint house 0 with one colour . Cost = 2. 
+             Paint house 1 with second colour. Cost = 5. 
+             Paint house 2 with third colour. Cost = 3.
+             Therefore, the total cost = 2 + 5 + 3 = 10.
+
+Example 2:
+
+Input:
+N = 2, K = 3
+cost[][3] = {{1, 2, 3}, {1, 4, 6}}
+Output: 3
+ 
+
+Your Task:  
+You don't need to read input or print anything. Your task is to complete the function minCost() which takes a 2-D array and two integers N and K as input and returns the minimum cost.
+
+ 
+
+Expected Time Complexity: O(N * K)
+Expected Auxiliary Space: O(1)
+
+Code:----
+
+class Solution {
+    /*You are required to complete this method*/
+    int minCost(int matrix[][], int n, int k)
+    {
+        int min1=Integer.MAX_VALUE;
+        int min2=Integer.MAX_VALUE;
+        
+        for(int i=0;i<matrix[0].length;i++)
+        {
+            if(min1>matrix[0][i])
+            {
+                min2=min1;
+                min1=matrix[0][i];
+            }
+            else if(min2>matrix[0][i])
+            {
+                min2=matrix[0][i];
+            }
+        }
+        for(int i=1;i<matrix.length;i++)
+        {
+            int min3=Integer.MAX_VALUE;
+            int min4=Integer.MAX_VALUE;
+            for(int j=0;j<matrix[0].length;j++)
+            {
+                if(matrix[i-1][j]!=min1)
+                {
+                    matrix[i][j]+=min1;
+                }
+                else
+                {
+                    matrix[i][j]+=min2;
+                }
+                if(min3>matrix[i][j])
+                {
+                    min4=min3;
+                    min3=matrix[i][j];;
+                }
+                else if(min4>matrix[i][j])
+                {
+                    min4=matrix[i][j];
+                }
+            }
+            min1=min3;
+            min2=min4;
+        }
+        return min1;
+    }
+}

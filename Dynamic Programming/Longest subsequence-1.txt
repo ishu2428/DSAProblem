@@ -1,0 +1,44 @@
+Longest subsequence-1
+
+Given an integer array arr[], find the length of the longest subsequence such that the absolute difference between adjacent elements is 1.
+
+Examples:
+
+Input: arr[] = [10, 9, 4, 5, 4, 8, 6]
+Output: 3
+Explanation: The three possible subsequences of length 3 are {10, 9, 8}, {4, 5, 4}, and {4, 5, 6}, where adjacent elements have a absolute difference of 1. No valid subsequence of greater length could be formed.
+Input: arr[] = [1, 2, 3, 4, 5]
+Output: 5
+Explanation: All the elements can be included in the valid subsequence.
+
+Code:---
+
+class Solution {
+    public static int longestSubseq(int[] arr) 
+    {
+        int dp[]=new int[arr.length];
+        for(int i=0;i<arr.length;i++)
+        {
+            dp[i]=1;
+        }
+        for(int i=1;i<arr.length;i++)
+        {
+            for(int j=i-1;j>=0;j--)
+            {
+                if( Math.abs(arr[i]-arr[j])==1 && dp[i]<dp[j]+1)
+                {
+                    dp[i]=dp[j]+1;
+                }
+            }
+        }
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<dp.length;i++)
+        {
+            if(max<dp[i])
+            {
+                max=dp[i];
+            }
+        }
+        return max;
+    }
+}
